@@ -1,4 +1,4 @@
-# Y-Table: html table processor
+# Y-Tables: html table parser & color-coder
 Extract key-value pairs from table entries and display as individual columns with color gradient.
 
 ## System setup
