@@ -77,13 +77,20 @@ def entry_process(entry:str):
 
     return Text(segs[0]).read_tag("b"), words
 
-def table_process(table:list[list[str]]):
+def table_process(table:list[list[str]], kw=""):
     res, keys, kmax = [], [], []
+    keywords = [k.lower() for k in kw.split(",")]
     # parse table
     for row in table:
         r = row[:3]
         title, heat = entry_process(row[3][::-1])
-        r.append(title)
+        tsq = title.lower() if title else ""
+        hl = []
+        if tsq and keywords:
+            for k in keywords:
+                if k in tsq:
+                    hl.append(k)
+        r.append((hl, title))
         if not keys:
             keys = [heat[i] for i in range(0, len(heat), 2)]
             kmax = [0 for _ in keys]
