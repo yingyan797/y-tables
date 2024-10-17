@@ -85,12 +85,23 @@ def table_process(table:list[list[str]], kw=""):
         r = row[:3]
         title, heat = entry_process(row[3][::-1])
         tsq = title.lower() if title else ""
-        hl = []
+        switch = [False for _ in tsq]
         if tsq and keywords:
             for k in keywords:
-                if k in tsq:
-                    hl.append(k)
-        r.append((hl, title))
+                loc = tsq.find(k)
+                if loc >= 0:
+                    switch = switch[:loc] + [True for _ in k] + switch[loc+len(k):]
+        segs = []
+        prev, i = False, 0
+        for j in range(len(switch)):
+            if switch[j] != prev:
+                segs.append((title[i:j], prev))
+                i = j
+                prev = switch[j]
+        if j > i:
+            segs.append((title[i:j], prev))
+
+        r.append((len(segs) > 1, segs))
         if not keys:
             keys = [heat[i] for i in range(0, len(heat), 2)]
             kmax = [0 for _ in keys]

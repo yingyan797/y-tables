@@ -9,17 +9,17 @@
 </head>
 <body style="padding-left: 5px;">
     <h5 style="background-color: lightgoldenrodyellow;"><a href="/">Y-Tables: Auto processor Home</a></h5> <form action="/" method="post">
-    <table><tr><th>Enter HTML segment of the table body (tbody) </th><td>Search keywords
+    <table><tr><th>Enter HTML segment of the table body (tbody) </th><td>Search keywords (comma separated)
     </td></tr><tr><td><textarea name="html" rows="4" cols="90" style="background-color: aliceblue; font-size: small;">{{html}}</textarea>
-    </td><td> <textarea name="kw" rows="1" cols="30">{{keywords}}</textarea><br>
+    </td><td> <textarea name="kw" rows="1" cols="50" title="Examples: reinforce,policy,data,ment learn,llm">{{keywords}}</textarea><br>
         <input type="submit" name="process" value="Create table"></td></tr></table></form>
     <b>Processed table</b><br>
     <table  class="table table-striped table-bordered table-hover"><tr><th>#</th><th>Proposer</th>
         <th>Department</th><th>Title</th> {% for key in table[0] %} <th>{{key}}</th> {% endfor %}
         <th>Num places</th></tr> {% for row in table[1] %} 
             <tr>{% for entry in row[:3] %} <td>{{entry}}</td> 
-        {% endfor %} <td style="{% if row[3][0] %} background-color: lightgreen;{% endif %}" 
-            title="{% if row[3][0] %}{{row[3][0]}}{% endif %}"><b>{{row[3][1]}}</b></td>
+        {% endfor %} <td style="{% if row[3][0] %}background-color: skyblue{% endif %}"
+        ><b> {% for seg, lab in row[3][1] %} {% if lab %}<span style="background-color: lightgreen;">{{seg}}</span>{% else %}{{seg}}{% endif %} {% endfor %}</b></td>
         {% for entry in row[4:-1] %} <td style="background-color: {{entry[1]}};">{{entry[0]}}</td> 
                 {% endfor %} <td>{{row[-1]}}</td> </tr> {% endfor %}
     </table>
